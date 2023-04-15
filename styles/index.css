@@ -3,6 +3,10 @@
     margin: 0;
 }
 
+body{
+    background: #e4e1dc;
+}
+
 .add__new_btn_mobile_only{
     position: fixed;
     bottom: 0;
@@ -12,8 +16,8 @@
     width: 100%;
 }
 
-@media (min-width: 768px) {
+/* @media (min-width: 768px) {
     .add__new_btn_mobile_only{
         display: none;
     }
-}
+} */

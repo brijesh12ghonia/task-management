@@ -14,36 +14,16 @@
     <title>Task Management</title>
 </head>
 
-<body data-bs-theme="dark">
+<body data-bs-theme="dark" onload="loadInitialData()">
     <nav class="navbar navbar-expand-md bg-dark-subtle">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">TaskPlanner</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addNewModal">
+                <i class="fa-solid fa-plus"></i>
+                Add New
             </button>
-
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
-                    </li>
-                </ul>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addNewModal">
-                    <i class="fa-solid fa-plus"></i>
-                    Add New
-                </button>
-            </div>
         </div>
     </nav>
-
-    <div class="add__new_btn_mobile_only d-lg-none">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addNewModal">
-            <i class="fa-solid fa-plus"></i>
-            Add New
-        </button>
-    </div>
 
     <div class="modal fade" id="addNewModal" tabindex="-1" aria-labelledby="addNewModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -53,15 +33,49 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <form onsubmit="return false">
+                        <div class="mb-3">
+                            <label for="imageUrl" class="form-label">Image URL</label>
+                            <input type="url" id="imageUrl" class="form-control"
+                                placeholder="https://example.com/image.png">
+                        </div>
+                        <div class="mb-3">
+                            <label for="taskTitle" class="form-label">Task Title</label>
+                            <input type="text" id="taskTitle" class="form-control" placeholder="Learn Web Dev" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="tags" class="form-label">Task Type</label>
+                            <input type="text" id="tags" class="form-control" placeholder="Work..." required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="taskDescription" class="form-label">Task Description</label>
+                            <textarea id="taskDescription" class="form-control" rows="4"
+                                placeholder="Add some description here.." required></textarea>
+                        </div>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" onclick="handleSubmit()">Save changes</button>
+                    </form>
+
                 </div>
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="showTask" tabindex="-1" aria-labelledby="showTaskLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="showTaskLabel">Task Details</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body task__modal__body"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <div class="container">
         <section class="mt-4">
@@ -69,7 +83,7 @@
                 <div class="col-md-6">
                     <div class="input-group flex-nowrap shadow-lg rounded">
                         <input type="search" class="form-control bg-dark-subtle" placeholder="Search Task"
-                            aria-label="Search Task" aria-describedby="addon-wrapping">
+                            aria-label="Search Task" aria-describedby="addon-wrapping" oninput="searchTask.apply(this, arguments)">
                         <span class="input-group-text" id="addon-wrapping">
                             <i class="fa-solid fa-magnifying-glass" style="color: #5b6370;"></i>
                         </span>
@@ -79,11 +93,11 @@
         </section>
 
         <section class="mt-4">
-            <div class="row task__contents">
-
-            </div>
+            <div class="row task__contents"></div>
         </section>
     </div>
+
+    <script src="scripts/index.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
         </script>
